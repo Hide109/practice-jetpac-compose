@@ -5,6 +5,7 @@ import android.view.Surface
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,10 +19,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.basiccodelab.ui.theme.BasicCodelabTheme
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.Button
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +54,7 @@ fun MyApp(
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     val expanded = remember { mutableStateOf(false) }
-    val extraPadding = if (expanded.value) 2000.dp else 0.dp
+    val extraPadding = if (expanded.value) 48.dp else 0.dp
 
     Surface(
             color = MaterialTheme.colorScheme.primary,
@@ -72,10 +77,29 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun OnboardingScreen(modifier: Modifier = Modifier){
+    var shouldShowOnboarding by remember { mutableStateOf (true) }
+
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Welcome to the Basics Codelab!")
+        Button(
+            modifier = Modifier.padding(vertical = 24.dp),
+            onClick = { shouldShowOnboarding = false }
+        ) {
+            Text("Continue")
+        }
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
 fun GreetingPreview() {
     BasicCodelabTheme {
-        MyApp()
+        OnboardingScreen()
     }
 }
